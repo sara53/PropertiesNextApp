@@ -1,8 +1,11 @@
 import Link from "next/link";
 import PropertyCard from "./PropertyCard";
-import properties from '@/properties.json'
-const HomeProperties = () => {
-    const recentProperties = properties.slice( 0, 3 )
+import Property from '@/models/Property'
+import connectDB from "@/config/database";
+
+const HomeProperties = async () => {
+    await connectDB();
+    const recentProperties = await Property.find( {} ).sort( { createdAt: -1 } ).limit( 3 )
     return (
         <>
             <section className="px-4 py-6">
